@@ -1,0 +1,113 @@
+@import "../../responsive.scss";
+nav{
+   height: 100px;
+   display:flex;
+   justify-content: space-between;
+   align-items: center;
+
+   a{
+      transition: all 0.4s ease;
+
+      @include sm{
+         display: none;
+      }
+
+      &:hover{
+         scale: 1.05;
+      }
+   }
+   .left{
+      flex:3;
+      display: flex;
+      align-items: center;
+      gap:50px;
+
+      .logo{
+         font-weight: bold;
+         font-size: 20px;
+         display: flex;
+         align-items: center;
+         gap:10px;
+
+         @include md{
+            span{
+               display: none;
+            }
+         }
+         @include sm{
+            span{
+               display: initial;
+            }
+         }
+   
+         img{
+            width: 34px;
+         }
+      }
+   }
+
+   .right{
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 50px;
+      background-color: whitesmoke;
+      height: 100%;
+
+      @include md{
+         background-color: transparent;
+      }
+
+      a{
+         padding:10px;
+         margin:20px;
+      }
+
+      .register{
+         background-color:gray;
+         color:whitesmoke;
+         border-radius: 5px;
+      }
+
+      .menuIcon{
+         display: none;
+         z-index:999;
+
+         @include sm{
+            display: initial;
+         }
+      }
+
+      img{
+         width: 34px;
+      }
+
+      .menu{
+         position: absolute;
+         top:0;
+         right: -50%;
+         background-color: gray;
+         color:white;
+         height: 100vh;
+         width: 50%;
+         transition: all 0.65s ease;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         font-size: 24px;
+
+         &.active{
+            right:0;
+         }
+
+         @include sm{
+            a{
+               display: initial;
+            }
+         }
+      }
+   }
+}
+

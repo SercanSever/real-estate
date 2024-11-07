@@ -23,8 +23,3 @@ yarn-error.log*
 client/node_modules
 api/node_modules
 api/.env
-
-# local files
-client/.env.local
-api/.env.local
-```
