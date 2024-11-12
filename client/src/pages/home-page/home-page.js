@@ -7,7 +7,7 @@ function HomePage() {
     <div className="homePage">
       <div className="textContainer">text</div>
       <div className="imgContainer">
-        <img src="" alt="" />
+        <img src="/slider.png" alt="" />
       </div>
     </div>
   );
