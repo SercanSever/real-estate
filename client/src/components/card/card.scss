@@ -62,13 +62,34 @@
 
       .features {
         display: flex;
-        gap: 200px;
+        gap: 20px;
         font-size: 14px;
 
         .feature {
           display: flex;
           gap: 5px;
           align-items: center;
+          background-color: whitesmoke;
+          padding: 5px;
+          border-radius: 5px;
+        }
+      }
+      .icons {
+        display: flex;
+        gap: 5px;
+
+        .icon {
+          border: 1px solid #999;
+          padding: 2px 5px;
+          border-radius: 5px;
+          cursor: pointer;
+          display: flex;
+          align-self: center;
+          justify-content: center;
+
+          &:hover {
+            background-color: lightgray;
+          }
         }
       }
     }
