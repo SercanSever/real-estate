@@ -31,7 +31,7 @@ const SinglePage = () => {
       </div>
       <div className="features">
         <div className="wrapper">
-          <p className="title">General</p>
+          {/* <p className="title">General</p> */}
           <div className="listVertical">
             <div className="feature">
               <img src="/utility.png" alt="" />
