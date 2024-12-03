@@ -1,3 +1,4 @@
+import Chat from "../../components/chat/chat";
 import List from "../../components/list/list";
 import "./profilePage.scss";
 import React from "react";
@@ -28,7 +29,7 @@ function ProfilePage() {
           </div>
           <div className="title">
             <h1>My List</h1>
-            <button>Create New Post"</button>
+            <button>Create New Post</button>
           </div>
           <List />
           <div className="title">
@@ -38,7 +39,9 @@ function ProfilePage() {
         </div>
       </div>
       <div className="chatContainer">
-        <div className="wrapper"></div>
+        <div className="wrapper">
+          <Chat />
+        </div>
       </div>
     </div>
   );

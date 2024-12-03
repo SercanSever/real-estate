@@ -1,9 +1,24 @@
+@import "../../responsive.scss";
+
 .profilePage {
   display: flex;
   height: 100%;
 
+  @include md {
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+
   .details {
     flex: 3;
+    overflow-y: scroll;
+    padding-bottom: 50px;
+
+    @include md {
+      flex: none;
+      overflow-y: hidden;
+      height: max-content;
+    }
 
     .wrapper {
       padding-right: 50px;
@@ -15,14 +30,32 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        h1 {
+          font-weight: 300;
+        }
+        button {
+          padding: 12px 24px;
+          background-color: #fece51;
+          cursor: pointer;
+          border: none;
+          border-radius: 10px;
+          font-size: 14px;
+          font-weight: 500;
+        }
       }
 
       .info {
         display: flex;
         flex-direction: column;
+        gap: 20px;
+        span {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
         img {
-          width: 50px;
-          height: 50px;
+          width: 30px;
+          height: 30px;
           border-radius: 50%;
           object-fit: cover;
         }
@@ -34,9 +67,13 @@
     flex: 2;
     background-color: whitesmoke;
     height: 100%;
-
+    @include md {
+      flex: none;
+      height: max-content;
+    }
     .wrapper {
       padding: 0px 20px;
+      height: 100%;
     }
   }
 }

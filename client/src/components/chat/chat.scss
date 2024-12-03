@@ -1,0 +1,143 @@
+@import "../../responsive.scss";
+
+.chat {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  @include md {
+    padding-top: 20px;
+  }
+
+  .messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: scroll;
+
+    @include md {
+      overflow-y: hidden;
+    }
+
+    h1 {
+      font-weight: 300;
+    }
+
+    .message {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .chatBox {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+
+    @include md {
+      flex: none;
+    }
+
+    h1 {
+      font-weight: 300;
+    }
+
+    .top {
+      background-color: #fece51;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        span {
+          font-weight: bold;
+        }
+      }
+      .close {
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+    .center {
+      overflow-y: scroll;
+      height: 280px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      // @include md {
+      //   height: max-content;
+      // }
+
+      .chatMessage {
+        width: 50%;
+
+        &.own {
+          align-self: flex-end;
+        }
+
+        span {
+          font-weight: bold;
+          background-color: #f7c14b85;
+          font-size: 12px;
+          padding: 2px;
+          border-radius: 5px;
+        }
+      }
+    }
+    .bottom {
+      border-top: 2px solid #f7c14b85;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      textarea {
+        flex: 3;
+        height: 100%;
+        border: none;
+        padding: 10px;
+      }
+
+      button {
+        flex: 1;
+        height: 100%;
+        border: none;
+        background-color: #fece51;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 10px;
+        font-size: 18px;
+      }
+    }
+  }
+}
