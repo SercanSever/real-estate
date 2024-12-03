@@ -8,6 +8,11 @@ export const register = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   //save db
   try {
+    const user = await prisma.user.findUnique({ where: { email: email } });
+    if (user != null) {
+      return res.status(400).json({ message: "User already exists!" });
+    }
+
     await prisma.user.create({
       data: {
         username: name,
@@ -22,11 +27,11 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
   try {
     //check if user exists
-    const user = await prisma.user.findUnique({ where: { username: name } });
-    if (!user) {
+    const user = await prisma.user.findUnique({ where: { email: email } });
+    if (user == null) {
       return res.status(401).json({ message: "Invalid Credentials!" });
     }
 
@@ -36,11 +41,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid password!" });
     }
 
-    //generate cookie token
+    //generate cookie and token
     const age = 1000 * 60 * 60 * 24 * 7; //7 days
-    const token = jwt.sign({ name: user.username }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
       expiresIn: age,
     });
+
+    const { password: userPassword, ...userInfo } = user;
 
     res
       .cookie("utoken", token, {
@@ -49,7 +56,7 @@ export const login = async (req, res) => {
         maxAge: age,
       })
       .status(200)
-      .json({ message: "Login successful!" });
+      .json(userInfo);
   } catch (error) {
     res.status(500).json({ message: `Error : ${error.message}` });
   }
