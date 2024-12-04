@@ -19,7 +19,6 @@ const Login = () => {
 
     try {
       const response = await apiRequest.post("/auth/login", user);
-      console.log(response);
       if (response.status === 200) {
         localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/");
