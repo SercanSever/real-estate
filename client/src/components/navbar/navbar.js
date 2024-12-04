@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth-context";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const { currentUser } = useContext(AuthContext);
 
   const user = true;
   return (

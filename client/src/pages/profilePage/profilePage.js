@@ -10,7 +10,6 @@ function ProfilePage() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      console.log("logout");
       localStorage.removeItem("user");
       const response = await apiRequest.post("/auth/logout");
       if (response.status === 200) {
