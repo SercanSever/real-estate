@@ -4,67 +4,82 @@ import bcrypt from "bcrypt";
 export const getAll = async (req, res) => {
   try {
     const users = await prisma.user.findMany();
-    res.status(200).json(users);
+    const usersWithoutPassword = users.map((user) => {
+      const { password, ...rest } = user;
+      return rest;
+    });
+    res.status(200).json(usersWithoutPassword);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const get = async (req, res) => {
   try {
-    const users = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: req.params.id },
     });
-    res.status(200).json(users);
+    const { password, ...rest } = user;
+    res.status(200).json(rest);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-export const add = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.user.create({
+export const add = async (req, res) => {
+  const { name, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    const createdUser = await prisma.user.create({
       data: {
         username: name,
         email,
         password: hashedPassword,
       },
     });
-    res.status(200).json({ message: "User created successfully" });
+    const { password: userPassword, ...user } = createdUser;
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const update = async (req, res) => {
   const id = req.params.id;
   if (id !== req.userId) res.status(401).json({ message: "Unauthorized" });
-  try {
-    const { name, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+  const { name, email, avatar, password } = req.body;
+  let hashedPassword = null;
+  if (password) hashedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.user.update({
+  try {
+    const updatedUser = await prisma.user.update({
       where: { id: id },
       data: {
         username: name,
         email,
-        password: hashedPassword,
+        ...(hashedPassword && { password: hashedPassword }),
+        ...(avatar && { avatar }),
       },
     });
 
-    res.status(200).json({ message: "User updated successfully" });
+    const { password: userPassword, ...user } = updatedUser;
+
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const remove = async (req, res) => {
   const id = req.params.id;
   if (id !== req.userId) res.status(401).json({ message: "Unauthorized" });
   try {
-    await prisma.user.delete({
+    const removedUser = await prisma.user.delete({
       where: { id: id },
     });
-    res.status(200).json({ message: "User deleted successfully" });
+    const { password, ...user } = removedUser;
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

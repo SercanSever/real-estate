@@ -1,12 +1,31 @@
 import { AuthContext } from "../../context/auth-context";
 import "./profile-update-page.scss";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import apiRequest from "../../lib/api-request";
+import UploadWidget from "../../components/upload-widget/upload-widget";
 
 const ProfileUpdatePage = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateUser } = useContext(AuthContext);
+  const [avatar, setAvatar] = useState(currentUser.avatar);
   const [error, setError] = useState("");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setError("");
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const { name, email, password } = Object.fromEntries(formData);
+    try {
+      const response = await apiRequest.put(`/user/${currentUser.id}`, {
+        name,
+        email,
+        password,
+        avatar,
+      });
+      if (response.status === 200) {
+        updateUser(response.data);
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   return (
@@ -17,8 +36,8 @@ const ProfileUpdatePage = () => {
           <div className="item">
             <label htmlFor="username">Username</label>
             <input
-              id="username"
-              name="username"
+              id="name"
+              name="name"
               type="text"
               defaultValue={currentUser.username}
             />
@@ -41,20 +60,17 @@ const ProfileUpdatePage = () => {
         </form>
       </div>
       <div className="sideContainer">
-        <img
-          src={currentUser.avatar || "/noavatar.jpg"}
-          alt=""
-          className="avatar"
-        />
-        {/* <UploadWidget
+        <img src={avatar || "/noavatar.jpg"} alt="" className="avatar" />
+        <UploadWidget
           uwConfig={{
-            cloudName: "lamadev",
+            cloudName: "sercansever",
             uploadPreset: "estate",
             multiple: false,
             maxImageFileSize: 2000000,
             folder: "avatars",
-          }} */}
-        {/* /> */}
+          }}
+          setAvatar={setAvatar}
+        />
       </div>
     </div>
   );
