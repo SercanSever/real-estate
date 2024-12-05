@@ -10,6 +10,7 @@ function ProfilePage() {
   const { updateUser, currentUser } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       updateUser(null);
