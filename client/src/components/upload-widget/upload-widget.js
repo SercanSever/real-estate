@@ -48,14 +48,16 @@ function UploadWidget({ uwConfig, setPublicId, setAvatar }) {
   };
 
   return (
-    <CloudinaryScriptContext.Provider className="cloudinary" value={{ loaded }}>
-      <button
-        id="upload_widget"
-        className="cloudinary-button"
-        onClick={initializeCloudinaryWidget}
-      >
-        Upload
-      </button>
+    <CloudinaryScriptContext.Provider value={{ loaded }}>
+      <div className="cloudinary">
+        <button
+          id="upload_widget"
+          className="cloudinary-button"
+          onClick={initializeCloudinaryWidget}
+        >
+          Upload
+        </button>
+      </div>
     </CloudinaryScriptContext.Provider>
   );
 }
