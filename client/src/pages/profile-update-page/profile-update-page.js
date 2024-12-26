@@ -1,6 +1,6 @@
 import { AuthContext } from "../../context/auth-context";
 import "./profile-update-page.scss";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import apiRequest from "../../lib/api-request";
 import UploadWidget from "../../components/upload-widget/upload-widget";
 

@@ -11,11 +11,12 @@ function UploadWidget({ uwConfig, setAvatar }) {
     if (!loaded) {
       const uwScript = document.getElementById("uw");
       if (!uwScript) {
-        script.setAttribute("async", "");
-        script.setAttribute("id", "uw");
-        script.src = source;
-        script.addEventListener("load", () => setLoaded(true));
-        document.body.appendChild(script);
+        const newScript = document.createElement("script");
+        newScript.setAttribute("async", "");
+        newScript.setAttribute("id", "uw");
+        newScript.src = source;
+        newScript.addEventListener("load", () => setLoaded(true));
+        document.body.appendChild(newScript);
       } else {
         setLoaded(true);
       }

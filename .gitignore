@@ -24,3 +24,10 @@ client/node_modules
 api/node_modules
 api/.env
 .vscode/
+client/.env
+api/.env
+.env
+.env.local
+client/localhost.crt
+client/localhost.key
+
