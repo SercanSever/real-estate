@@ -3,7 +3,7 @@ import "./upload-widget.scss";
 
 const CloudinaryScriptContext = createContext();
 
-function UploadWidget({ uwConfig, setAvatar }) {
+function UploadWidget({ uwConfig, setState }) {
   const [loaded, setLoaded] = useState(false);
   const source = "https://upload-widget.cloudinary.com/global/all.js";
 
@@ -29,7 +29,7 @@ function UploadWidget({ uwConfig, setAvatar }) {
         uwConfig,
         (error, result) => {
           if (!error && result && result.event === "success") {
-            setAvatar(result.info.secure_url);
+            setState((prev) => [...prev, result.info.secure_url]);
           }
         }
       );
