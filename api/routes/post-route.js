@@ -4,6 +4,7 @@ import {
   createPost,
   updatePost,
   deletePost,
+  getPost,
 } from "../controllers/post-controller.js";
 import { verifyToken } from "../middlewares/verify-token.js";
 const router = express.Router();

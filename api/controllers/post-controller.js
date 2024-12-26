@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import prisma from "../lib/prisma.js";
 
 export const getPosts = async (req, res) => {
   try {
@@ -14,6 +14,15 @@ export const getPost = async (req, res) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id: req.params.id },
+      include: {
+        PostDetail: true,
+        User: {
+          select: {
+            username: true,
+            avatar: true,
+          },
+        },
+      },
     });
     res.json(post);
   } catch (error) {
@@ -23,33 +32,20 @@ export const getPost = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const {
-    title,
-    price,
-    img,
-    address,
-    city,
-    bedroom,
-    bathroom,
-    latitude,
-    longitude,
-    type,
-    property,
-  } = req.body;
+  const body = req.body;
+  const tokenUserId = req.userId;
   try {
     const post = await prisma.post.create({
       data: {
-        title,
-        price,
-        img,
-        address,
-        city,
-        bedroom,
-        bathroom,
-        latitude,
-        longitude,
-        type,
-        property,
+        ...body.postData,
+        User: {
+          connect: {
+            id: tokenUserId,
+          },
+        },
+        PostDetail: {
+          create: body.postDetail,
+        },
       },
     });
     res.json(post);
@@ -60,38 +56,24 @@ export const createPost = async (req, res) => {
 };
 
 export const updatePost = async (req, res) => {
-  const { id } = req.params;
-  const {
-    title,
-    price,
-    img,
-    address,
-    city,
-    bedroom,
-    bathroom,
-    latitude,
-    longitude,
-    type,
-    property,
-  } = req.body;
+  const body = req.body;
+  const tokenUserId = req.userId;
   try {
-    const post = await prisma.post.update({
-      where: { id: id },
+    const post = await prisma.post.findUnique({
+      where: { id: req.params.id },
+    });
+    if (post.userId !== tokenUserId)
+      return res
+        .status(403)
+        .json({ message: "You are not allowed to update this post" });
+
+    const updatedPost = await prisma.post.update({
+      where: { id: post.id },
       data: {
-        title,
-        price,
-        img,
-        address,
-        city,
-        bedroom,
-        bathroom,
-        latitude,
-        longitude,
-        type,
-        property,
+        ...body,
       },
     });
-    res.json(post);
+    res.json(updatedPost);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
@@ -99,9 +81,17 @@ export const updatePost = async (req, res) => {
 };
 
 export const deletePost = async (req, res) => {
-  const { id } = req.params;
+  const tokenUserId = req.userId;
   try {
-    await prisma.post.delete({ where: { id: id } });
+    const post = await prisma.post.findUnique({
+      where: { id: req.params.id },
+    });
+    if (post.userId !== tokenUserId)
+      return res
+        .status(403)
+        .json({ message: "You are not allowed to delete this post" });
+
+    await prisma.post.delete({ where: { id: post.id } });
     res.json({ message: "Post deleted" });
   } catch (error) {
     console.log(error);
