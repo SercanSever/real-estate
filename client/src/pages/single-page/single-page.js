@@ -1,7 +1,6 @@
 import React from "react";
 import "./single-page.scss";
 import Slider from "../../components/slider/slider";
-import { post, userData } from "../../lib/dummy-data";
 import Map from "../../components/map/map";
 import { useLoaderData } from "react-router-dom";
 
@@ -65,12 +64,8 @@ const SinglePage = () => {
             <div className="feature">
               <img src="/fee.png" alt="" />
               <div className="featureText">
-                <span>Property Fees</span>
-                {post.PostDetail.propertyFees === "owner" ? (
-                  <p>Owner is responsible</p>
-                ) : (
-                  <p>Renter is responsible</p>
-                )}
+                <span>Income</span>
+                <p>{post.PostDetail.income}</p>
               </div>
             </div>
           </div>
