@@ -46,7 +46,7 @@ const SinglePage = () => {
                 {post.PostDetail.utilities === "owner" ? (
                   <p>Owner is responsible</p>
                 ) : (
-                  <p>Renter is responsible</p>
+                  <p>Tenant is responsible</p>
                 )}
               </div>
             </div>
@@ -64,7 +64,7 @@ const SinglePage = () => {
             <div className="feature">
               <img src="/fee.png" alt="" />
               <div className="featureText">
-                <span>Income</span>
+                <span>Income Policy</span>
                 <p>{post.PostDetail.income}</p>
               </div>
             </div>
@@ -73,11 +73,11 @@ const SinglePage = () => {
           <div className="sizes">
             <div className="size">
               <img src="/size.png" alt="" />
-              <span>{post.PostDetail.size}sqm</span>
+              <span>{post.PostDetail.size} sqft</span>
             </div>
             <div className="size">
               <img src="/bed.png" alt="" />
-              <span>{post.bedroom} bed</span>
+              <span>{post.bedroom} beds</span>
             </div>
             <div className="size">
               <img src="/bath.png" alt="" />

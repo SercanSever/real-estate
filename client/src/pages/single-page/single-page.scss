@@ -3,7 +3,7 @@
 .singlePage {
   display: flex;
   height: 100%;
-
+  overflow-y: scroll;
   @include md {
     flex-direction: column;
   }
@@ -178,6 +178,7 @@
       .mapContainer {
         width: 100%;
         height: 200px;
+        z-index: 1;
       }
 
       .buttons {
