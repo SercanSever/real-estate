@@ -1,10 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./list-page.scss";
-import { listData } from "../../lib/dummy-data.js";
 import Filter from "../../components/filter/filter.js";
 import Card from "../../components/card/card.js";
 import Map from "../../components/map/map.js";
-import { useLoaderData } from "react-router-dom";
+import { Await, useLoaderData } from "react-router-dom";
 
 function ListPage() {
   // const data = listData;
@@ -14,13 +13,31 @@ function ListPage() {
       <div className="listContainer">
         <div className="wrapper">
           <Filter />
-          {data.map((item) => (
-            <Card key={item.id} item={item} />
-          ))}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Await
+              resolve={data.postPromise}
+              errorElement={<div>Failed to load data</div>}
+            >
+              {(postPromise) =>
+                postPromise.data.map((post) => (
+                  <Card key={post.id} item={post} />
+                ))
+              }
+            </Await>
+          </Suspense>
         </div>
       </div>
       <div className="mapContainer">
-        <Map items={data} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await
+            resolve={data.postPromise}
+            errorElement={<div>Failed to load data</div>}
+          >
+            {(postPromise) =>
+              postPromise.data.length > 0 && <Map items={postPromise.data} />
+            }
+          </Await>
+        </Suspense>
       </div>
     </div>
   );

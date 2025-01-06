@@ -31,7 +31,11 @@ const Map = ({ items }) => {
       />
 
       {items.map((item) => (
-        <Pin key={item.id} item={item} />
+        <Pin
+          key={item.id}
+          position={[item.latitude, item.longitude]}
+          item={item}
+        />
       ))}
     </MapContainer>
   );
