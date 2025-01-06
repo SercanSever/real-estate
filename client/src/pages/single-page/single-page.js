@@ -6,7 +6,6 @@ import { useLoaderData } from "react-router-dom";
 
 const SinglePage = () => {
   const post = useLoaderData();
-  console.log(post);
 
   return (
     <div className="singlePage">

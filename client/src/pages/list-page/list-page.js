@@ -9,7 +9,6 @@ import { useLoaderData } from "react-router-dom";
 function ListPage() {
   // const data = listData;
   const data = useLoaderData();
-  console.log(data);
   return (
     <div className="listPage">
       <div className="listContainer">
