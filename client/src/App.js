@@ -15,63 +15,75 @@ import {
 } from "./lib/loaders";
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <Layout />,
+        children: [
+          {
+            path: "/",
+            element: <HomePage />,
+          },
+          {
+            path: "/list",
+            element: <ListPage />,
+            loader: listPageLoader,
+          },
+          {
+            path: "/:id",
+            element: <SinglePage />,
+            loader: singlePageLoader,
+          },
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/register",
+            element: <Register />,
+          },
+          {
+            path: "/profile-update",
+            element: <ProfileUpdatePage />,
+          },
+          {
+            path: "/new-post",
+            element: <NewPostPage />,
+          },
+        ],
+      },
+      {
+        path: "/",
+        element: <RequireAuth />,
+        children: [
+          {
+            path: "/profile",
+            element: <ProfilePage />,
+            loader: profilePageLoader,
+          },
+          {
+            path: "/profile-update",
+            element: <ProfileUpdatePage />,
+          },
+          {
+            path: "/new-post",
+            element: <NewPostPage />,
+          },
+        ],
+      },
+    ],
     {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/",
-          element: <HomePage />,
-        },
-        {
-          path: "/list",
-          element: <ListPage />,
-          loader: listPageLoader,
-        },
-        {
-          path: "/:id",
-          element: <SinglePage />,
-          loader: singlePageLoader,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/register",
-          element: <Register />,
-        },
-        {
-          path: "/profile-update",
-          element: <ProfileUpdatePage />,
-        },
-        {
-          path: "/new-post",
-          element: <NewPostPage />,
-        },
-      ],
-    },
-    {
-      path: "/",
-      element: <RequireAuth />,
-      children: [
-        {
-          path: "/profile",
-          element: <ProfilePage />,
-          loader: profilePageLoader,
-        },
-        {
-          path: "/profile-update",
-          element: <ProfileUpdatePage />,
-        },
-        {
-          path: "/new-post",
-          element: <NewPostPage />,
-        },
-      ],
-    },
-  ]);
+      future: {
+        v7_startTransition: true,
+        v7_skipActionErrorRevalidation: true,
+        v7_normalizeFormMethod: true,
+        v7_partialHydration: true,
+        v7_fetcherPersist: true,
+        v7_relativeSplatPath: true,
+      },
+    }
+  );
 
   return <RouterProvider router={router} />;
 }
