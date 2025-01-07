@@ -76,7 +76,14 @@ function ProfilePage() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat />
+          <Suspense>
+            <Await
+              resolve={data.chatPromise}
+              errorElement={<div>Failed to load chat</div>}
+            >
+              {(chatPromise) => <Chat chats={chatPromise.data} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>

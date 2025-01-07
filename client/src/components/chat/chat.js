@@ -1,69 +1,23 @@
 import React, { useState } from "react";
 import "./chat.scss";
 
-function Chat() {
+function Chat({ chats }) {
   const [chat, setChat] = useState(true);
-
+  console.log(chats);
   return (
     <div className="chat">
       <div className="messages">
         <h1>Messages</h1>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem, ipsum dolor sit amet </p>
-        </div>
+        {chats &&
+          chats.map((chat) => (
+            <div className="message" key={chat.id}>
+              {chat.receiver && (
+                <img src={chat.receiver.avatar || "/noavatar.jpg"} alt="" />
+              )}
+              {chat.receiver && <span>{chat.receiver.username}</span>}
+              <p>{chat.lastMessage} </p>
+            </div>
+          ))}
       </div>
       {chat && (
         <div className="chatBox">
