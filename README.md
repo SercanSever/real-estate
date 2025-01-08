@@ -99,7 +99,7 @@ npm install
 5. Configure environment variables
 Create `.env` file in the api directory with the following variables:
 ```env
-DATABASE_URL="mysql://user:password@localhost:3306/real_estate"
+DATABASE_URL = "mongodb+srv://(username):(password)@cluster0.sjep1xm.mongodb.net/(dbName)?retryWrites=true&w=majority&appName=(appName)"
 JWT_SECRET="your-secret-key"
 EMAIL_USER="your-email@gmail.com"
 EMAIL_PASS="your-email-app-password"
