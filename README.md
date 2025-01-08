@@ -4,6 +4,22 @@
 
 This is a full-stack web application developed to facilitate modern real estate buying, selling, and rental transactions.
 
+## Screenshots
+
+### Home Page, About Page, and Contact Page
+<div align="center">
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374242/home_oe76k5.png" alt="Home Page" width="32%" />
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374238/about_dc1tga.png" alt="About Page" width="32%" />
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374241/contact_ldv0tf.png" alt="Contact Page" width="32%" />
+</div>
+
+### Property List, User Profile, and Chat
+<div align="center">
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374239/list_cxy1bj.png" alt="Property List" width="32%" />
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374239/profile_xfk0n4.png" alt="User Profile" width="32%" />
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374240/chat_u5k6ws.png" alt="Chat Interface" width="32%" />
+</div>
+
 ## Technologies
 
 ### Backend (API)
