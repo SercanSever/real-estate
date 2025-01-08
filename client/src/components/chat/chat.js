@@ -21,30 +21,34 @@ function Chat({ chats }) {
   }, [chat]);
 
   const handleOpenChat = async (id, receiver) => {
-    const res = await apiRequest("/chat/" + id);
-    if (!res.data.seenBy.includes(currentUser.id)) {
-      decrease();
+    try {
+      const res = await apiRequest("/chat/" + id);
+      if (!res.data.seenBy.includes(currentUser.id)) {
+        decrease();
+      }
+      setChat({ ...res.data, receiver });
+    } catch (err) {
+      console.log(err);
     }
-    setChat({ ...res.data, receiver });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
     const text = formData.get("text");
+
     if (!text) return;
     try {
-      const res = await apiRequest.post("/message/" + chat.id, {
-        text,
-      });
+      const res = await apiRequest.post("/message/" + chat.id, { text });
       setChat((prev) => ({ ...prev, Messages: [...prev.Messages, res.data] }));
       e.target.reset();
       socket.emit("sendMessage", {
         receiverId: chat.receiver.id,
         data: res.data,
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -52,23 +56,23 @@ function Chat({ chats }) {
     const read = async () => {
       try {
         await apiRequest.put("/chat/read/" + chat.id);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     };
 
     if (chat && socket) {
       socket.on("getMessage", (data) => {
-        if (data.chatId === chat.id) {
+        if (chat.id === data.chatId) {
           setChat((prev) => ({ ...prev, Messages: [...prev.Messages, data] }));
+          read();
         }
-        read();
       });
     }
     return () => {
-      if (socket) socket.off("getMessage");
+      socket.off("getMessage");
     };
-  }, [chat, socket]);
+  }, [socket, chat]);
 
   return (
     <div className="chat">

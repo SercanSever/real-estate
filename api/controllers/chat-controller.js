@@ -96,10 +96,10 @@ export const readChat = async (req, res) => {
         userIds: {
           hasSome: [tokenUserId],
         },
-        data: {
-          seenBy: {
-            push: [tokenUserId],
-          },
+      },
+      data: {
+        seenBy: {
+          push: [tokenUserId],
         },
       },
     });
