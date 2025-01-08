@@ -75,7 +75,7 @@ real-estate/
 
 1. Clone the repository
 ```bash
-git clone [repo-url]
+git clone https://github.com/SercanSever/real-estate.git
 ```
 
 2. Backend setup
