@@ -15,7 +15,7 @@ This is a full-stack web application developed to facilitate modern real estate 
 
 ### Property List, User Profile, and Chat
 <div align="center">
-  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374239/list_cxy1bj.png" alt="Property List" width="32%" />
+  <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374239/list_cxy1bj.png" alt="Properties List" width="32%" />
   <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374239/profile_xfk0n4.png" alt="User Profile" width="32%" />
   <img src="https://res.cloudinary.com/sercansever/image/upload/v1736374240/chat_u5k6ws.png" alt="Chat Interface" width="32%" />
 </div>
