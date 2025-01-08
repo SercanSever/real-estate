@@ -1,15 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./chat.scss";
 import { AuthContext } from "../../context/auth-context.js";
 import apiRequest from "../../lib/api-request.js";
 import { format } from "timeago.js";
+import { SocketContext } from "../../context/socket-context.js";
+import { useNotificationStore } from "../../lib/notificationstore.js";
 
 function Chat({ chats }) {
   const [chat, setChat] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
+
+  const messageEndRef = useRef();
+  const decrease = useNotificationStore((state) => state.decrease);
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chat]);
 
   const handleOpenChat = async (id, receiver) => {
     const res = await apiRequest("/chat/" + id);
+    if (!res.data.seenBy.includes(currentUser.id)) {
+      decrease();
+    }
     setChat({ ...res.data, receiver });
   };
 
@@ -24,32 +39,59 @@ function Chat({ chats }) {
       });
       setChat((prev) => ({ ...prev, Messages: [...prev.Messages, res.data] }));
       e.target.reset();
+      socket.emit("sendMessage", {
+        receiverId: chat.receiver.id,
+        data: res.data,
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    const read = async () => {
+      try {
+        await apiRequest.put("/chat/read/" + chat.id);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (chat && socket) {
+      socket.on("getMessage", (data) => {
+        if (data.chatId === chat.id) {
+          setChat((prev) => ({ ...prev, Messages: [...prev.Messages, data] }));
+        }
+        read();
+      });
+    }
+    return () => {
+      if (socket) socket.off("getMessage");
+    };
+  }, [chat, socket]);
 
   return (
     <div className="chat">
       <div className="messages">
         <h1>Messages</h1>
         {chats &&
-          chats.map((chat) => (
+          chats.map((c) => (
             <div
               className="message"
-              key={chat.id}
+              key={c.id}
               style={{
-                backgroundColor: chat.seenBy.includes(currentUser.id)
-                  ? "white"
-                  : "#fecd514e",
+                backgroundColor:
+                  c.seenBy.includes(currentUser.id) || c.id === chat?.id
+                    ? "white"
+                    : "#fecd514e",
               }}
-              onClick={() => handleOpenChat(chat.id, chat.receiver)}
+              onClick={() => handleOpenChat(c.id, c.receiver)}
             >
-              {chat.receiver && (
-                <img src={chat.receiver.avatar || "/noavatar.jpg"} alt="" />
+              {c.receiver && (
+                <img src={c.receiver.avatar || "/noavatar.jpg"} alt="" />
               )}
-              {chat.receiver && <span>{chat.receiver.username}</span>}
-              <p>{chat.lastMessage} </p>
+              {c.receiver && <span>{c.receiver.username}</span>}
+              <p>{c.lastMessage} </p>
             </div>
           ))}
       </div>
@@ -82,6 +124,7 @@ function Chat({ chats }) {
                 <span>{format(message.createdAt)}</span>
               </div>
             ))}
+            <div ref={messageEndRef}></div>
           </div>
           <form className="bottom" onSubmit={handleSubmit}>
             <textarea name="text" id="text"></textarea>

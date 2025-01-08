@@ -42,7 +42,7 @@ const Login = () => {
             name="email"
             required
             minLength={3}
-            maxLength={20}
+            maxLength={40}
             type="text"
             placeholder="Username"
           />
