@@ -13,7 +13,14 @@ function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await apiRequest.post("/mailSender/send", formData);
-    console.log(res);
+    if (res.status === 200) {
+      alert("Email sent successfully");
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    }
   };
 
   const handleChange = (e) => {
