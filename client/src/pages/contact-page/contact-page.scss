@@ -1,0 +1,121 @@
+@import "../../responsive.scss";
+
+.contactPage {
+  display: flex;
+  height: 100%;
+
+  .textContainer {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow-y: scroll;
+    padding-bottom: 30px;
+
+    .title {
+      font-size: 64px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #666;
+      padding-right: 80px;
+    }
+
+    .contactInfo {
+      display: flex;
+      gap: 50px;
+      margin: 20px 0;
+      padding-right: 30px;
+
+      .infoItem {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #666;
+
+        svg {
+          width: 24px;
+          height: 24px;
+          color: #1a1a1a;
+        }
+      }
+    }
+
+    .contactForm {
+      max-width: 600px;
+      padding-right: 30px;
+
+      .formGroup {
+        margin-bottom: 20px;
+
+        label {
+          display: block;
+          margin-bottom: 8px;
+          color: #1a1a1a;
+          font-weight: 500;
+        }
+
+        input,
+        textarea {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          font-size: 16px;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #1a1a1a;
+          }
+        }
+
+        textarea {
+          height: 150px;
+          resize: vertical;
+        }
+      }
+
+      button {
+        background-color: #1a1a1a;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: #333;
+        }
+      }
+    }
+  }
+
+  .imgContainer {
+    flex: 2;
+    background-color: whitesmoke;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    @include md {
+      display: none;
+    }
+
+    img {
+      width: 105%;
+      position: absolute;
+      right: 0;
+
+      @include lg {
+        width: 100%;
+      }
+    }
+  }
+}

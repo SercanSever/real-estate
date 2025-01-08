@@ -18,7 +18,6 @@ const SinglePage = () => {
       if (!currentUser) {
         navigate("/login");
       }
-      console.log(post.id);
       await apiRequest.post("user/save", { postId: post.id });
     } catch (error) {
       setSaved((prev) => !prev);

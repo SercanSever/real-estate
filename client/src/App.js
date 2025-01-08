@@ -13,6 +13,8 @@ import {
   listPageLoader,
   profilePageLoader,
 } from "./lib/loaders";
+import AboutPage from "./pages/about-page/about-page";
+import ContactPage from "./pages/contact-page/contact-page";
 
 function App() {
   const router = createBrowserRouter(
@@ -44,12 +46,12 @@ function App() {
             element: <Register />,
           },
           {
-            path: "/profile-update",
-            element: <ProfileUpdatePage />,
+            path: "/about",
+            element: <AboutPage />,
           },
           {
-            path: "/new-post",
-            element: <NewPostPage />,
+            path: "/contact",
+            element: <ContactPage />,
           },
         ],
       },
