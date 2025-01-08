@@ -24,7 +24,9 @@ const Filter = () => {
   return (
     <div className="filter">
       <h1>
-        Search result for <b>{query.city}</b>
+        {query.city === ""
+          ? "All Properties"
+          : "Search result for " + query.city}
       </h1>
 
       <div className="top">
